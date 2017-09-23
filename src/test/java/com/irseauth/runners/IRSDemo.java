@@ -38,7 +38,7 @@ public class IRSDemo {
 
 	@Test
 	public void loginTest() {
-		login.startLogging("Login functionality");
+		login.startLogging("Login test");
 		login.logData(LogStatus.WARNING, "Nothing here");
 		login.finishLogging();
 	}

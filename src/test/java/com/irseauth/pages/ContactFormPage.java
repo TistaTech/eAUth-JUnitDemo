@@ -8,12 +8,10 @@ import java.io.IOException;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import com.irseauth.utilities.ConfigurationReader;
 import com.irseauth.utilities.Driver;
 import com.relevantcodes.extentreports.LogStatus;;
 
@@ -98,16 +96,14 @@ public class ContactFormPage extends BasePage {
 	public void verifyConfirmationMessage_PO() {
 		try {
 			waitForTheElementToBeDisplayed(confirmation, 2);
-			if (isDisplayed(confirmation))
+			if (isDisplayed(confirmation)) {
 				logData(LogStatus.PASS, "Test case PASSED - " + getCellData(i, 0) + " " + getCellData(i, 1));
+			} else {
+				logData(LogStatus.FAIL, "Test case FAILED - " + getCellData(i, 0) + " " + getCellData(i, 1));
+			}
 		} catch (Exception e) {
 			logData(LogStatus.FAIL,
 					"Test case FAILED - " + getCellData(i, 0) + " " + getCellData(i, 1) + ": " + e.toString());
-		} finally {
-			if (!isDisplayed(confirmation)) {
-				logData(LogStatus.FAIL, "Test case FAILED - " + getCellData(i, 0) + " " + getCellData(i, 1));
-				finishLogging();
-			}
 		}
 	}
 
@@ -125,15 +121,8 @@ public class ContactFormPage extends BasePage {
 				logData(LogStatus.FAIL,
 						"Test case FAILED - " + getCellData(i, 0) + " " + getCellData(i, 1) + ": " + e.toString());
 				continue;
-			} finally {
-				// if
-				// (!driver.getTitle().equals(ConfigurationReader.getProperty("baseTitle")))
-				// {
-				// test.log(LogStatus.FAIL, "Test case 'Contact Form' FAILED");
-				// finishLogging();
-				// }
 			}
 		}
-	}
 
+	}
 }

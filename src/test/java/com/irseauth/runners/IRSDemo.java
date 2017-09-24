@@ -14,7 +14,6 @@ import org.openqa.selenium.support.PageFactory;
 import com.irseauth.pages.ContactFormPage;
 import com.irseauth.pages.LoginPage;
 import com.irseauth.utilities.Driver;
-import com.relevantcodes.extentreports.LogStatus;
 
 public class IRSDemo {
 

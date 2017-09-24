@@ -8,11 +8,9 @@ import java.io.IOException;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import com.irseauth.utilities.ConfigurationReader;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class LoginPage extends BasePage {
@@ -48,9 +46,11 @@ public class LoginPage extends BasePage {
 		try {
 			waitForTheElementToBeDisplayed(dashboard, 2);
 			if (isDisplayed(dashboard)) {
-				logData(LogStatus.PASS, "Test case PASSED - Username: " + getCellData(i, 0) + " Password: " + getCellData(i, 1));
+				logData(LogStatus.PASS,
+						"Test case PASSED - Username: " + getCellData(i, 0) + " Password: " + getCellData(i, 1));
 			} else {
-				logData(LogStatus.FAIL, "Test case FAILED - Username: " + getCellData(i, 0) + " Password: " + getCellData(i, 1));
+				logData(LogStatus.FAIL,
+						"Test case FAILED - Username: " + getCellData(i, 0) + " Password: " + getCellData(i, 1));
 				finishLogging();
 			}
 		} catch (Exception e) {
@@ -70,8 +70,8 @@ public class LoginPage extends BasePage {
 				inputDataLogin_PO();
 				verifyLoggedIn_PO();
 			} catch (Exception e) {
-				logData(LogStatus.FAIL,
-						"Test case FAILED - Username: " + getCellData(i, 0) + " Password: " + getCellData(i, 1) + ": " + e.toString());
+				logData(LogStatus.FAIL, "Test case FAILED - Username: " + getCellData(i, 0) + " Password: "
+						+ getCellData(i, 1) + ": " + e.toString());
 				continue;
 			}
 		}

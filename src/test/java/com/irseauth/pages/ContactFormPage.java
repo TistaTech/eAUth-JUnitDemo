@@ -33,7 +33,7 @@ public class ContactFormPage extends BasePage {
 	@FindBy(id = "wpforms-22-field_1")
 	public WebElement email;
 
-	@FindBy(id = "wpforms-22-field_")      //7
+	@FindBy(id = "wpforms-22-field_7")
 	public WebElement phoneNumber;
 
 	@FindBy(id = "wpforms-22-field_8_1")
@@ -68,10 +68,10 @@ public class ContactFormPage extends BasePage {
 
 	int i;
 
-	public void inputData()
+	public void inputDataContactForm_PO()
 			throws InterruptedException, EncryptedDocumentException, InvalidFormatException, IOException {
 
-		waitForTheElementToBeDisplayed(firstName, 5);
+		waitForTheElementToBeDisplayed(firstName, 2);
 
 		type(getCellData(i, 0), firstName);
 		logData(LogStatus.INFO, "First Name Entered");
@@ -95,29 +95,43 @@ public class ContactFormPage extends BasePage {
 
 	}
 
-	public void verifyConfirmationMessage() {
-		waitForTheElementToBeDisplayed(confirmation, 5);
-		Assert.assertTrue(isDisplayed(confirmation));
-		logData(LogStatus.PASS, "Test case PASSED - " + getCellData(i, 0) + " " + getCellData(i, 1));
+	public void verifyConfirmationMessage_PO() {
+		try {
+			waitForTheElementToBeDisplayed(confirmation, 2);
+			if (isDisplayed(confirmation))
+				logData(LogStatus.PASS, "Test case PASSED - " + getCellData(i, 0) + " " + getCellData(i, 1));
+		} catch (Exception e) {
+			logData(LogStatus.FAIL,
+					"Test case FAILED - " + getCellData(i, 0) + " " + getCellData(i, 1) + ": " + e.toString());
+		} finally {
+			if (!isDisplayed(confirmation)) {
+				logData(LogStatus.FAIL, "Test case FAILED - " + getCellData(i, 0) + " " + getCellData(i, 1));
+				finishLogging();
+			}
+		}
 	}
 
-	public void dataEntry()
+	public void dataEntryContactForm_PO()
 			throws EncryptedDocumentException, InvalidFormatException, InterruptedException, IOException {
 
 		openExcelFile("./src/test/resources/test_data/Book1.xlsx", "Sheet1");
 
 		for (i = 1; i < getUsedRowsCount(); i++) {
 			try {
-				navigateToPage();
-				inputData();
-				verifyConfirmationMessage();
+				navigateToPage("baseURL", "baseTitle");
+				inputDataContactForm_PO();
+				verifyConfirmationMessage_PO();
 			} catch (Exception e) {
-				logData(LogStatus.FAIL, "Test case FAILED - " + getCellData(i, 0) + " " + getCellData(i, 1) + ": " + e.toString());
+				logData(LogStatus.FAIL,
+						"Test case FAILED - " + getCellData(i, 0) + " " + getCellData(i, 1) + ": " + e.toString());
 				continue;
 			} finally {
-				if (!driver.getTitle().equals(ConfigurationReader.getProperty("baseTitle")))
-					test.log(LogStatus.FAIL, "Test case 'Contact Form' FAILED");
-				finishLogging();
+				// if
+				// (!driver.getTitle().equals(ConfigurationReader.getProperty("baseTitle")))
+				// {
+				// test.log(LogStatus.FAIL, "Test case 'Contact Form' FAILED");
+				// finishLogging();
+				// }
 			}
 		}
 	}

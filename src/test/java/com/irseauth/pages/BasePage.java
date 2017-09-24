@@ -31,7 +31,7 @@ public class BasePage {
 
 	public BasePage() {
 		this.driver = Driver.getInstance();
-		
+
 	}
 
 	// This method finds a WebElement based on it's locator etc. xpath,
@@ -43,14 +43,12 @@ public class BasePage {
 	// These methods are to generalize the url get method for the browser to
 	// navigate to a page defined as the url.
 	// This method will also validate the pageTitle.
-	public void navigateToPage() {
-		try {
-			driver.get(ConfigurationReader.getProperty("baseURL"));
-			Assert.assertEquals(driver.getTitle(), ConfigurationReader.getProperty("baseTitle"));
-			test.log(LogStatus.INFO, "Successfully navigated to " + ConfigurationReader.getProperty("baseURL"));
-		} finally {
-			if(!driver.getTitle().equals(ConfigurationReader.getProperty("baseTitle")))
-			test.log(LogStatus.WARNING, "Couldn't navigate to " + ConfigurationReader.getProperty("baseURL"));
+	public void navigateToPage(String URL, String title) {
+		driver.get(ConfigurationReader.getProperty(URL));
+		if ((driver.getTitle().equals(ConfigurationReader.getProperty(title)))) {
+			test.log(LogStatus.INFO, "Successfully navigated to " + ConfigurationReader.getProperty(URL));
+		} else {
+			test.log(LogStatus.WARNING, "Couldn't navigate to " + ConfigurationReader.getProperty(URL));
 		}
 	}
 
@@ -254,14 +252,14 @@ public class BasePage {
 		report.endTest(test);
 		report.flush();
 	}
-	
+
 	public void logData(LogStatus status, String message) {
 		test.log(status, message);
 	}
-	
+
 	public void startLogging(String testName) {
 		report = ExtentFactory.getInstance();
 		test = report.startTest(testName);
 	}
-	
+
 }

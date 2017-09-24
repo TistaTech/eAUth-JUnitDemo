@@ -26,20 +26,20 @@ public class IRSDemo {
 	public static void initializeTestBaseSetup() {
 		driver = Driver.getInstance();
 		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 	}
 
 	@Test
 	public void contactForm() throws InterruptedException, EncryptedDocumentException, InvalidFormatException, IOException {
 		contactForm.startLogging("Contact Form");
-		contactForm.dataEntry();
+		contactForm.dataEntryContactForm_PO();
 		contactForm.finishLogging();
 	}
 
 	@Test
-	public void loginTest() {
+	public void loginTest() throws EncryptedDocumentException, InvalidFormatException, InterruptedException, IOException {
 		login.startLogging("Login test");
-		login.logData(LogStatus.WARNING, "Nothing here");
+		login.dataEntryLogin_PO();
 		login.finishLogging();
 	}
 

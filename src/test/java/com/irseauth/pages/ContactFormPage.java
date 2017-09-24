@@ -13,6 +13,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.irseauth.utilities.ConfigurationReader;
 import com.irseauth.utilities.Driver;
 import com.relevantcodes.extentreports.LogStatus;;
 
@@ -32,7 +33,7 @@ public class ContactFormPage extends BasePage {
 	@FindBy(id = "wpforms-22-field_1")
 	public WebElement email;
 
-	@FindBy(id = "wpforms-22-field_7")
+	@FindBy(id = "wpforms-22-field_")      //7
 	public WebElement phoneNumber;
 
 	@FindBy(id = "wpforms-22-field_8_1")
@@ -67,7 +68,8 @@ public class ContactFormPage extends BasePage {
 
 	int i;
 
-	public void inputData() throws InterruptedException, EncryptedDocumentException, InvalidFormatException, IOException {
+	public void inputData()
+			throws InterruptedException, EncryptedDocumentException, InvalidFormatException, IOException {
 
 		waitForTheElementToBeDisplayed(firstName, 5);
 
@@ -87,7 +89,7 @@ public class ContactFormPage extends BasePage {
 		logData(LogStatus.INFO, "Dropdown option selected");
 		type(getCellData(i, 5), commentSection);
 		logData(LogStatus.INFO, "Message entered");
-		
+
 		click(submitButton);
 		logData(LogStatus.INFO, "Submit button clicked");
 
@@ -98,19 +100,24 @@ public class ContactFormPage extends BasePage {
 		Assert.assertTrue(isDisplayed(confirmation));
 		logData(LogStatus.PASS, "Test case PASSED - " + getCellData(i, 0) + " " + getCellData(i, 1));
 	}
-	
-	public void dataEntry() throws EncryptedDocumentException, InvalidFormatException, InterruptedException, IOException {
-		
+
+	public void dataEntry()
+			throws EncryptedDocumentException, InvalidFormatException, InterruptedException, IOException {
+
 		openExcelFile("./src/test/resources/test_data/Book1.xlsx", "Sheet1");
-		
+
 		for (i = 1; i < getUsedRowsCount(); i++) {
 			try {
 				navigateToPage();
 				inputData();
 				verifyConfirmationMessage();
 			} catch (Exception e) {
-				logData(LogStatus.FAIL, "Test case FAILED - " + getCellData(i, 0) + " " + getCellData(i, 1));
+				logData(LogStatus.FAIL, "Test case FAILED - " + getCellData(i, 0) + " " + getCellData(i, 1) + ": " + e.toString());
 				continue;
+			} finally {
+				if (!driver.getTitle().equals(ConfigurationReader.getProperty("baseTitle")))
+					test.log(LogStatus.FAIL, "Test case 'Contact Form' FAILED");
+				finishLogging();
 			}
 		}
 	}

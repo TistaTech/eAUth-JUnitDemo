@@ -51,7 +51,6 @@ public class BasePage {
 		} finally {
 			if(!driver.getTitle().equals(ConfigurationReader.getProperty("baseTitle")))
 			test.log(LogStatus.WARNING, "Couldn't navigate to " + ConfigurationReader.getProperty("baseURL"));
-			finishLogging();
 		}
 	}
 

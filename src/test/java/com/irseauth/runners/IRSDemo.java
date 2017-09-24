@@ -26,7 +26,7 @@ public class IRSDemo {
 	public static void initializeTestBaseSetup() {
 		driver = Driver.getInstance();
 		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 	}
 
 	@Test

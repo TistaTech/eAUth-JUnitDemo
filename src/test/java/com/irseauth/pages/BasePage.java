@@ -262,7 +262,7 @@ public class BasePage {
 		File srcImage = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
  		FileUtils.copyFile(srcImage, new File("./extentreports/" + name + ".png"));
 // 		test.log(status, message + test.addScreenCapture("./" + name + ".png"));
- 		test.log(status, message + test.addScreenCapture("https://raw.githubusercontent.com/TistaTech/eAUth-JUnitDemo/master/extentreports/1VTXHGmJWE.png"));
+ 		test.log(status, message + test.addScreenCapture("https://raw.githubusercontent.com/TistaTech/eAUth-JUnitDemo/master/extentreports/" + name + ".png"));
  		
 // 		https://github.com/TistaTech/eAUth-JUnitDemo/blob/master/extentreports/1VTXHGmJWE.png
 //		https://raw.githubusercontent.com/TistaTech/eAUth-JUnitDemo/master/extentreports/YBylrBfLFB.png

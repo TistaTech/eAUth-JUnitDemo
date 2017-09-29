@@ -263,7 +263,7 @@ public class BasePage {
 //		FileUtils.copyFile(srcImage, new File("./extentreports/" + name + ".png"));
 //		test.log(status, message + test.addScreenCapture("./" + name + ".png"));
 
-		
+		https://raw.githubusercontent.com/TistaTech/eAUth-JUnitDemo/master/extentreports/YBylrBfLFB.png
 
 		FileUtils.copyFile(srcImage, new File("./extentreports/" + name + ".png"));
 		test.log(status, message + test.addScreenCapture("https://github.com/TistaTech/eAUth-JUnitDemo/tree/master/extentreports/" + name + ".png"));

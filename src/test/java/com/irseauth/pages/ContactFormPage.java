@@ -93,7 +93,7 @@ public class ContactFormPage extends BasePage {
 
 	}
 
-	public void verifyConfirmationMessage_PO() {
+	public void verifyConfirmationMessage_PO() throws IOException {
 		try {
 			waitForTheElementToBeDisplayed(confirmation, 2);
 			if (isDisplayed(confirmation)) {

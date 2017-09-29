@@ -1,13 +1,18 @@
 package com.irseauth.pages;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -42,13 +47,12 @@ public class BasePage {
 
 	// These methods are to generalize the url get method for the browser to
 	// navigate to a page defined as the url.
-	// This method will also validate the pageTitle.
-	public void navigateToPage(String URL, String title) {
+	public void navigateToPage(String URL, String title) throws IOException {
 		driver.get(ConfigurationReader.getProperty(URL));
 		if ((driver.getTitle().equals(ConfigurationReader.getProperty(title)))) {
-			test.log(LogStatus.INFO, "Successfully navigated to " + ConfigurationReader.getProperty(URL));
+			logData(LogStatus.INFO, "Successfully navigated to " + ConfigurationReader.getProperty(URL));
 		} else {
-			test.log(LogStatus.WARNING, "Couldn't navigate to " + ConfigurationReader.getProperty(URL));
+			logData(LogStatus.WARNING, "Couldn't navigated to " + ConfigurationReader.getProperty(URL));
 		}
 	}
 
@@ -253,13 +257,26 @@ public class BasePage {
 		report.flush();
 	}
 
-	public void logData(LogStatus status, String message) {
-		test.log(status, message);
+	public void logData(LogStatus status, String message) throws IOException {
+		String name = getRandomString(10);
+		File srcImage = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(srcImage, new File("./extentreports/" + name + ".png"));
+		test.log(status, message + test.addScreenCapture("./" + name + ".png"));
 	}
 
 	public void startLogging(String testName) {
 		report = ExtentFactory.getInstance();
 		test = report.startTest(testName);
+	}
+	
+	public static String getRandomString(int length) {
+		StringBuilder sb = new StringBuilder();
+		String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+		for (int i = 0; i < length; i++) {
+			int index = (int) (Math.random() * characters.length());
+			sb.append(characters.charAt(index));
+		}
+		return sb.toString();
 	}
 
 }

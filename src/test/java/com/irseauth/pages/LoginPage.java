@@ -29,7 +29,7 @@ public class LoginPage extends BasePage {
 
 	int i;
 
-	private void inputDataLogin_PO() throws InterruptedException {
+	private void inputDataLogin_PO() throws InterruptedException, IOException {
 		waitForTheElementToBeDisplayed(username, 2);
 		script_stand_by(2000);
 		type(getCellData(i, 0), username);
@@ -41,7 +41,7 @@ public class LoginPage extends BasePage {
 		logData(LogStatus.INFO, "Login button clicked");
 	}
 
-	private void verifyLoggedIn_PO() {
+	private void verifyLoggedIn_PO() throws IOException {
 
 		try {
 			waitForTheElementToBeDisplayed(dashboard, 2);

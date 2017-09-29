@@ -260,8 +260,8 @@ public class BasePage {
 	public void logData(LogStatus status, String message) throws IOException {
 		String name = getRandomString(10);
 		File srcImage = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
- 		FileUtils.copyFile(srcImage, new File("./target/" + name + ".png"));
- 		test.log(status, message + test.addScreenCapture("./" + name + ".png"));
+ 		FileUtils.copyFile(srcImage, new File("C:/Users/Marat Metoff/workspace/IRSeAuthDemo/target/" + name + ".png"));
+ 		test.log(status, message + test.addScreenCapture("C:/Users/Marat Metoff/workspace/IRSeAuthDemo/target/" + name + ".png"));
 	}
 
 	public void startLogging(String testName) {

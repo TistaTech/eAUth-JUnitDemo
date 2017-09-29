@@ -260,9 +260,10 @@ public class BasePage {
 	public void logData(LogStatus status, String message) throws IOException {
 		String name = getRandomString(10);
 		File srcImage = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
- 		FileUtils.copyFile(srcImage, new File("./target/" + name + ".png"));
- 		test.log(status, message + test.addScreenCapture("./" + name + ".png"));
-// 		test.log(status, message + test.addScreenCapture("https://raw.githubusercontent.com/TistaTech/eAUth-JUnitDemo/master/extentreports/" + name + ".png"));
+// 		FileUtils.copyFile(srcImage, new File("./target/" + name + ".png"));
+// 		test.log(status, message + test.addScreenCapture("./" + name + ".png"));
+ 		FileUtils.copyFile(srcImage, new File("https://raw.githubusercontent.com/TistaTech/eAUth-JUnitDemo/master/extentreports/" + name + ".png"));
+ 		test.log(status, message + test.addScreenCapture("https://raw.githubusercontent.com/TistaTech/eAUth-JUnitDemo/master/extentreports/" + name + ".png"));
  		
 // 		https://github.com/TistaTech/eAUth-JUnitDemo/blob/master/extentreports/1VTXHGmJWE.png
 //		https://raw.githubusercontent.com/TistaTech/eAUth-JUnitDemo/master/extentreports/YBylrBfLFB.png

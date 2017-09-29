@@ -259,16 +259,21 @@ public class BasePage {
 
 	public void logData(LogStatus status, String message) throws IOException {
 		String name = getRandomString(10);
-		File srcImage = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		File srcImage = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+//		FileUtils.copyFile(srcImage, new File("./extentreports/" + name + ".png"));
+//		test.log(status, message + test.addScreenCapture("./" + name + ".png"));
+
+		
+
 		FileUtils.copyFile(srcImage, new File("./extentreports/" + name + ".png"));
-		test.log(status, message + test.addScreenCapture("./" + name + ".png"));
+		test.log(status, message + test.addScreenCapture("https://github.com/TistaTech/eAUth-JUnitDemo/tree/master/extentreports/" + name + ".png"));
 	}
 
 	public void startLogging(String testName) {
 		report = ExtentFactory.getInstance();
 		test = report.startTest(testName);
 	}
-	
+
 	public static String getRandomString(int length) {
 		StringBuilder sb = new StringBuilder();
 		String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";

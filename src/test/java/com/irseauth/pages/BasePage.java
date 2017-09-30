@@ -263,8 +263,8 @@ public class BasePage {
 	public void logData(LogStatus status, String message) throws IOException {
 		String name = getRandomString(10);
 		File srcImage = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
- 		FileUtils.copyFile(srcImage, new File("./target/extentreports/" + name + ".png"));
- 		test.log(status, message + test.addScreenCapture("./" + name + ".png"));
+ 		FileUtils.copyFile(srcImage, new File("./target/extentreports/images/" + name + ".png"));
+ 		test.log(status, message + test.addScreenCapture("./images/" + name + ".png"));
 	}
 
 	public void startLogging(String testName) {

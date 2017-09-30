@@ -33,6 +33,9 @@ public class BasePage {
 	JavascriptExecutor js;
 	ExtentReports report;
 	ExtentTest test;
+	
+	private static final String BAT_PATH = "C:/Users/Marat Metoff/.jenkins/workspace/JUnitDemo/target/ArchiveReport.bat";
+	private static String cmd = "cmd /c start " + BAT_PATH; 
 
 	public BasePage() {
 		this.driver = Driver.getInstance();
@@ -260,8 +263,8 @@ public class BasePage {
 	public void logData(LogStatus status, String message) throws IOException {
 		String name = getRandomString(10);
 		File srcImage = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
- 		FileUtils.copyFile(srcImage, new File("./target/images/" + name + ".png"));
- 		test.log(status, message + test.addScreenCapture("./images/" + name + ".png"));
+ 		FileUtils.copyFile(srcImage, new File("./target/extentreports/" + name + ".png"));
+ 		test.log(status, message + test.addScreenCapture("./" + name + ".png"));
 	}
 
 	public void startLogging(String testName) {
@@ -278,5 +281,10 @@ public class BasePage {
 		}
 		return sb.toString();
 	}
+	
+	public static void archiveReport() throws Exception {  
+		Runtime.getRuntime().exec(cmd); 								
+		Thread.sleep(2000);  
+		} 
 
 }

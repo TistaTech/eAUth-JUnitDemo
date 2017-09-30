@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
+import com.irseauth.pages.BasePage;
 import com.irseauth.pages.ContactFormPage;
 import com.irseauth.pages.LoginPage;
 import com.irseauth.utilities.Driver;
@@ -43,7 +44,8 @@ public class IRSDemo {
 	}
 
 	@AfterClass
-	public static void tearDown() {
+	public static void tearDown() throws Exception {
 		Driver.closeDriver();
+		BasePage.archiveReport();
 	}
 }

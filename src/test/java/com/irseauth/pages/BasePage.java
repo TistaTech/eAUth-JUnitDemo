@@ -260,8 +260,14 @@ public class BasePage {
 	public void logData(LogStatus status, String message) throws IOException {
 		String name = getRandomString(10);
 		File srcImage = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
- 		FileUtils.copyFile(srcImage, new File("./target/images/" + name + ".png"));
- 		test.log(status, message + test.addScreenCapture("./images/" + name + ".png"));
+// 		FileUtils.copyFile(srcImage, new File("./target/images/" + name + ".png"));
+// 		test.log(status, message + test.addScreenCapture("./images/" + name + ".png"));
+		
+		String destination = System.getProperty("user.dir") + "/Pics/" + name + ".png";
+		File finalDestination = new File(destination);
+		FileUtils.copyFile(srcImage, finalDestination);
+		
+		System.out.println(System.getProperty("user.dir"));
 	}
 
 	public void startLogging(String testName) {

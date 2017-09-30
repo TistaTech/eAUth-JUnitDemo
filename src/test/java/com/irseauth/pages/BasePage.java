@@ -34,7 +34,7 @@ public class BasePage {
 	ExtentReports report;
 	ExtentTest test;
 	
-	private static final String BAT_PATH = "C:/Daily.bat";
+	private static final String BAT_PATH = "C:/Bat_Files/ArchiveReport.bat";
 	private static String cmd = "cmd /c start " + BAT_PATH; 
 
 	public BasePage() {

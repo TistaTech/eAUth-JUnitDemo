@@ -32,11 +32,16 @@ public class LoginPage extends BasePage {
 	private void inputDataLogin_PO() throws InterruptedException, IOException {
 		waitForTheElementToBeDisplayed(username, 2);
 		script_stand_by(2000);
+		
+		highlightAreaWithJavascript(username);
 		type(getCellData(i, 0), username);
 		logData(LogStatus.INFO, "Username Entered");
+		
+		highlightAreaWithJavascript(password);
 		type(getCellData(i, 1), password);
 		logData(LogStatus.INFO, "Password Entered");
 
+		highlightAreaWithJavascript(loginButton);
 		click(loginButton);
 		logData(LogStatus.INFO, "Login button clicked");
 	}

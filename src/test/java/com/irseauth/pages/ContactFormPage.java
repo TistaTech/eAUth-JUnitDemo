@@ -39,6 +39,9 @@ public class ContactFormPage extends BasePage {
 
 	@FindBy(id = "wpforms-22-field_8_2")
 	public WebElement checkbox2;
+	
+	@FindBy(css = "label[for='wpforms-22-field_8_2']")
+	public WebElement checkbox2Text;
 
 	@FindBy(id = "wpforms-22-field_8_3")
 	public WebElement checkbox3;
@@ -51,6 +54,9 @@ public class ContactFormPage extends BasePage {
 
 	@FindBy(id = "wpforms-22-field_9_3")
 	public WebElement radioButton3;
+	
+	@FindBy(css = "label[for='wpforms-22-field_9_3']")
+	public WebElement radioButton3Text;
 
 	@FindBy(id = "wpforms-22-field_4")
 	public WebElement dropdownMenu;
@@ -63,31 +69,47 @@ public class ContactFormPage extends BasePage {
 
 	@FindBy(id = "wpforms-confirmation-22")
 	public WebElement confirmation;
-
+	
 	int i;
 
 	public void inputDataContactForm_PO()
 			throws InterruptedException, EncryptedDocumentException, InvalidFormatException, IOException {
 
 		waitForTheElementToBeDisplayed(firstName, 2);
-
+		
+		highlightAreaWithJavascript(firstName);
 		type(getCellData(i, 0), firstName);
 		logData(LogStatus.INFO, "First Name Entered");
+		
+		highlightAreaWithJavascript(lastName);
 		type(getCellData(i, 1), lastName);
 		logData(LogStatus.INFO, "Last Name Entered");
+		
+		highlightAreaWithJavascript(email);
 		type(getCellData(i, 2), email);
 		logData(LogStatus.INFO, "Email Entered");
+		
+		highlightAreaWithJavascript(phoneNumber);
 		type(getCellData(i, 3), phoneNumber);
 		logData(LogStatus.INFO, "Phone Number Entered");
+		
+		highlightAreaWithJavascript(checkbox2Text);													
 		click(checkbox2);
 		logData(LogStatus.INFO, "Second checkbox selected");
+		
+		highlightAreaWithJavascript(radioButton3Text);
 		click(radioButton3);
 		logData(LogStatus.INFO, "Third radio button selected");
+		
+		highlightAreaWithJavascript(dropdownMenu);
 		dropdownMenuSelect(dropdownMenu, getCellData(i, 4));
 		logData(LogStatus.INFO, "Dropdown option selected");
+		
+		highlightAreaWithJavascript(commentSection);
 		type(getCellData(i, 5), commentSection);
 		logData(LogStatus.INFO, "Message entered");
 
+		highlightAreaWithJavascript(submitButton);
 		click(submitButton);
 		logData(LogStatus.INFO, "Submit button clicked");
 

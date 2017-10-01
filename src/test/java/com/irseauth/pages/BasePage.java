@@ -33,9 +33,9 @@ public class BasePage {
 	JavascriptExecutor js;
 	ExtentReports report;
 	ExtentTest test;
-	
+
 	private static final String BAT_PATH = "C:/Bat_Files/ArchiveReport.bat";
-	private static String cmd = "cmd /c start " + BAT_PATH; 
+	private static String cmd = "cmd /c start " + BAT_PATH;
 
 	public BasePage() {
 		this.driver = Driver.getInstance();
@@ -263,8 +263,8 @@ public class BasePage {
 	public void logData(LogStatus status, String message) throws IOException {
 		String name = getRandomString(10);
 		File srcImage = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
- 		FileUtils.copyFile(srcImage, new File("./target/extentreports/images/" + name + ".png"));
- 		test.log(status, message + test.addScreenCapture("./images/" + name + ".png"));
+		FileUtils.copyFile(srcImage, new File("./target/extentreports/images/" + name + ".png"));
+		test.log(status, message + test.addScreenCapture("./images/" + name + ".png"));
 	}
 
 	public void startLogging(String testName) {
@@ -281,10 +281,18 @@ public class BasePage {
 		}
 		return sb.toString();
 	}
-	
-	public static void archiveReport() throws Exception {  
-		Runtime.getRuntime().exec(cmd); 								
-		Thread.sleep(2000);  
-		} 
+
+	public static void archiveReport() throws Exception {
+		Runtime.getRuntime().exec(cmd);
+		Thread.sleep(2000);
+	}
+
+	public static void highlightAreaWithJavascript(WebElement element) throws InterruptedException {
+
+		JavascriptExecutor js = (JavascriptExecutor)Driver.getInstance();
+		js.executeScript("arguments[0].style.border= '3px solid red'", element);
+		Thread.sleep(2000);
+		js.executeScript("arguments[0].style.border= '3px solid white'", element);
+	}
 
 }

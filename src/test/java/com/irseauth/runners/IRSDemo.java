@@ -47,5 +47,6 @@ public class IRSDemo {
 	public static void tearDown() throws Exception {
 		Driver.closeDriver();
 		BasePage.archiveReport();
+		
 	}
 }

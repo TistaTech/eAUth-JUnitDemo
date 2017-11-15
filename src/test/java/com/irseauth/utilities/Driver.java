@@ -40,6 +40,7 @@ public class Driver {
 			default:
 				ChromeDriverManager.getInstance().setup();
 				driver = new ChromeDriver();
+				break;
 			}
 		}
 		return driver;

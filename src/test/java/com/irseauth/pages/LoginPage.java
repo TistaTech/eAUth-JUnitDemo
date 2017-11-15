@@ -10,10 +10,17 @@ import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
+import com.irseauth.utilities.Driver;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class LoginPage extends BasePage {
+	
+	public LoginPage() {
+		super();
+		PageFactory.initElements(Driver.getInstance(), this);
+	}
 
 	@FindBy(id = "user_login")
 	public WebElement username;

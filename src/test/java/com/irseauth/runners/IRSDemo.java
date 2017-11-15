@@ -5,11 +5,13 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
 import com.irseauth.pages.BasePage;
 import com.irseauth.pages.ContactFormPage;
@@ -18,33 +20,33 @@ import com.irseauth.utilities.Driver;
 
 public class IRSDemo {
 
-	public static WebDriver driver;
-	ContactFormPage contactForm = PageFactory.initElements(driver, ContactFormPage.class);
-	LoginPage login = PageFactory.initElements(driver, LoginPage.class);
+	private WebDriver driver;
+	ContactFormPage contactForm = new ContactFormPage();
+	LoginPage login = new LoginPage();
 
-	@BeforeClass
-	public static void initializeTestBaseSetup() {
+	@BeforeTest
+	public void setUp() {
 		driver = Driver.getInstance();
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 	}
 
-	@Test
+	@Test(priority = 0, enabled = true)
 	public void contactForm() throws InterruptedException, EncryptedDocumentException, InvalidFormatException, IOException {
 		contactForm.startLogging("Contact Form");
 		contactForm.dataEntryContactForm_PO();
 		contactForm.finishLogging();
 	}
 
-	@Test
+	@Test(priority = 1, enabled = false)
 	public void loginTest() throws EncryptedDocumentException, InvalidFormatException, InterruptedException, IOException {
 		login.startLogging("Login test");
 		login.dataEntryLogin_PO();
 		login.finishLogging();
 	}
 
-	@AfterClass
-	public static void tearDown() throws Exception {
+	@AfterTest
+	public void tearDown() throws Exception {
 		Driver.closeDriver();
 		BasePage.archiveReport();
 	}

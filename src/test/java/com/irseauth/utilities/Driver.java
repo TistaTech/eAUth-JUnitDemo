@@ -29,7 +29,7 @@ public class Driver {
 				driver = new ChromeDriver();
 				break;
 			case "ie":
-				InternetExplorerDriverManager.getInstance().setup();
+				InternetExplorerDriverManager.getInstance().arch64().setup();
 				driver = new InternetExplorerDriver();
 				break;
 			

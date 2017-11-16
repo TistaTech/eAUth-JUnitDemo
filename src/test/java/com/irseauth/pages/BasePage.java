@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -19,6 +18,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import com.irseauth.utilities.ConfigurationReader;
 import com.irseauth.utilities.Driver;
@@ -39,19 +39,10 @@ public class BasePage {
 
 	public BasePage() {
 		this.driver = Driver.getInstance();
-
 	}
 
-	// This method finds a WebElement based on it's locator etc. xpath,
-	// cssclass, class, id etc.
-	public WebElement find(By locator) {
-		return driver.findElement(locator);
-	}
 
-	// These methods are to generalize the url get method for the browser to
-	// navigate to a page defined as the url.
-	public void navigateToPage(String URL, String title) throws IOException {
-		System.out.println(driver);
+	public void navigateToPage(String URL, String title) throws IOException {									// Navigates to URL, verifies the title and logs the result
 		driver.get(ConfigurationReader.getProperty(URL));
 		if ((driver.getTitle().equals(ConfigurationReader.getProperty(title)))) {
 			logData(LogStatus.INFO, "Successfully navigated to " + ConfigurationReader.getProperty(URL));
@@ -59,81 +50,40 @@ public class BasePage {
 			logData(LogStatus.WARNING, "Couldn't navigated to " + ConfigurationReader.getProperty(URL));
 		}
 	}
-
-	// This method find a locator and selects by Visible Text present.
-	public void selectByText(By locator, String value) {
-		new Select(driver.findElement(locator)).selectByVisibleText(value);
-	}
-
-	// This method clicks on a WebElement based on it's locator etc. xpath,
-	// cssclass, class, id etc.
-	public void click(WebElement element) {
-		element.click();
-	}
-
-	// This method uses javascript to click on a WebElement based on it's
-	// locator etc. xpath, cssclass, class, id etc.
-	public void js_click(By locator) {
+																												
+	public void js_click(By locator) {																			// This method uses javascript to click on a WebElement based on it's locator:xpath, cssclass, class, id etc.
 		JavascriptExecutor js_executor = (JavascriptExecutor) driver;
 		WebElement element = driver.findElement(locator);
 		js_executor.executeScript("var elem=arguments[0]; setTimeout(function() { elem.click();}, 100)", element);
-		ImplicitWait(20);
+		implicitWait(20);
 	}
 
-	// This method presses tab on the selected element
-	public void pressTabOn(By locator) {
+	public void pressTabOn(By locator) {																		// This method presses tab on the selected element
 		WebElement element = driver.findElement(locator);
 		element.sendKeys(Keys.TAB);
-		ImplicitWait(10);
+		implicitWait(10);
 	}
 
-	// This method presses return on the selected element
-	public void pressReturnOn(By locator) {
+	public void pressReturnOn(By locator) {																		// This method presses return on the selected element
 		WebElement element = driver.findElement(locator);
 		element.sendKeys(Keys.RETURN);
 	}
 
-	// This method presses space on the selected element
-	public void pressSpaceOn(By locator) {
+	public void pressSpaceOn(By locator) {																		// This method presses space on the selected element
 		WebElement element = driver.findElement(locator);
 		element.sendKeys(Keys.SPACE);
 	}
 
-	// This method selects multiple values by holding down the control key.
-	public void selectMultiple(By locator) {
+	public void selectMultiple(By locator) {																	// This method selects multiple values by holding down the control key
 		driver.findElement(locator).sendKeys(Keys.CONTROL);
 	}
 
-	// This method types in text in a WebElement based on it's locator etc.
-	// xpath, cssclass, class, id etc.
-	public void type(String inputText, WebElement element) {
+	public void type(String inputText, WebElement element) {													// This method clears the field and types in text in a WebElement based on it's locator
 		element.clear();
 		element.sendKeys(inputText);
 	}
 
-	// This method submits the current form.
-	public void submit(By locator) {
-		find(locator).submit();
-	}
-
-	// This method switch a frame focus for a web applications with frames.
-	public void switch_frame(By locator) {
-		driver.switchTo().frame(find(locator));
-	}
-
-	// This medhod switches to the default frame.
-	public void switch_default() {
-		driver.switchTo().defaultContent();
-	}
-
-	// This method retrieves text from the defined element
-	public void GetElementText(WebElement element) {
-		element.getText();
-	}
-
-	// This method validates an item is currently displayed based on it's
-	// locator etc. xpath, cssclass, class, id etc..
-	public Boolean isDisplayed(WebElement element) {
+	public Boolean isDisplayed(WebElement element) {															// This method validates an item is currently displayed based on it's locator
 		try {
 			return element.isDisplayed();
 		} catch (org.openqa.selenium.NoSuchElementException exception) {
@@ -141,20 +91,15 @@ public class BasePage {
 		}
 	}
 
-	// This method validates the existence of an element on a page
-	public void ValidateElementExists(WebElement element) {
+	public void ValidateElementExists(WebElement element) {														// This method validates the existence of an element on a page
 		Assert.assertTrue(isDisplayed(element));
 	}
 
-	// This method validates that an element that should not be on the page does
-	// not show up
-	public void ValidateNoElementExists(WebElement element) {
+	public void ValidateNoElementExists(WebElement element) {													// This method validates that an element that should not be on the page does not show up 
 		Assert.assertFalse(isDisplayed(element));
 	}
 
-	// This method waits for an element to be displayed for the defined timeout
-	// amount.
-	public Boolean waitForTheElementToBeDisplayed(WebElement element, Integer... timeout) {
+	public Boolean waitForTheElementToBeDisplayed(WebElement element, Integer... timeout) {						// This method waits for an element to be displayed for the defined timeout amount
 		try {
 			waitFor(ExpectedConditions.visibilityOf(element), (timeout.length > 0 ? timeout[0] : null));
 		} catch (org.openqa.selenium.TimeoutException exception) {
@@ -163,30 +108,20 @@ public class BasePage {
 		return true;
 	}
 
-	// This method waits for an element to become clickable
-	public void waitUntilClickable(By locator) {
+	public void waitUntilClickable(By locator) {																// This method waits for an element to become clickable
 		WebDriverWait wait = new WebDriverWait(driver, 180);
 		wait.until(ExpectedConditions.elementToBeClickable(locator));
 	}
 
-	// This method switches the test window focus to a specific window.
-	public void switch_window_focus_to(String value) {
+	public void switch_window_focus_to(String value) {															// This method switches the test window focus to a specific window.
 		driver.switchTo().window(value);
 	}
 
-	// This method closes the browser window.
-	public void close_window() {
-		driver.close();
-	}
-
-	// This method switched the screen to the default frame
-	public void switchToDefaultContent() {
+	public void switchToDefaultContent() {																		// This method switched the screen to the default frame
 		driver.switchTo().defaultContent();
 	}
 
-	// This method waits for a page frame to be displayed for the defined
-	// timeout amount.
-	public Boolean waitAndSwitchToFrame(By locator, Integer... timeout) {
+	public Boolean waitAndSwitchToFrame(By locator, Integer... timeout) {										// This method waits for a page frame to be displayed for the defined timeout amount
 		WebDriverWait wait = new WebDriverWait(driver, 180);
 		try {
 			wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(locator));
@@ -196,9 +131,7 @@ public class BasePage {
 		return true;
 	}
 
-	// This method waits for a page frame to be displayed for the defined
-	// timeout amount.
-	public Boolean waitForAlert(Integer... timeout) {
+	public Boolean waitForAlert(Integer... timeout) {															// This method waits for a page frame to be displayed for the defined timeout amount
 		WebDriverWait wait = new WebDriverWait(driver, 180);
 		try {
 			wait.until(ExpectedConditions.alertIsPresent());
@@ -208,26 +141,22 @@ public class BasePage {
 		return true;
 	}
 
-	// This method an element to be in an expected state.
-	private void waitFor(ExpectedCondition<WebElement> condition, Integer timeout) {
+	private void waitFor(ExpectedCondition<WebElement> condition, Integer timeout) {							// This method waits for an element to be in an expected state.
 		timeout = timeout != null ? timeout : 5;
 		WebDriverWait wait = new WebDriverWait(driver, timeout);
 		wait.until(condition);
 	}
 
-	public void script_stand_by(Integer timeout) throws InterruptedException {
+	public void script_stand_by(Integer timeout) throws InterruptedException {									// Puts thread to sleep
 		Thread.sleep(timeout);
 	}
 
-	// This is an implicit Wait based on an amount preferred.
-	public void ImplicitWait(Integer timeout) {
+	public void implicitWait(Integer timeout) {																	// This is an implicit Wait based on an amount preferred
 		timeout = timeout != null ? timeout : 5;
 		driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
 	}
 
-	// This method waits for a JS alert, if present the driver will switch to
-	// the alert for further interaction.
-	public boolean isAlertPresent(WebDriver driver) {
+	public boolean isAlertPresent(WebDriver driver) {															// This method waits for a JS alert, if present the driver will switch to the alert for further interaction
 		try {
 			driver.switchTo().alert();
 			return true;
@@ -236,8 +165,7 @@ public class BasePage {
 		}
 	}
 
-	// This method switch focus to a Javascript alert and accepts it.
-	public void AcceptAlert() {
+	public void AcceptAlert() {																					// This method switch focus to a Javascript alert and accepts it
 		WebDriverWait wait = new WebDriverWait(driver, 600);
 		if (isAlertPresent(driver)) {
 			wait.until(ExpectedConditions.alertIsPresent());
@@ -256,24 +184,24 @@ public class BasePage {
 		select.selectByValue(value);
 	}
 
-	public void finishLogging() {
-		report.endTest(test);
-		report.flush();
+	public void startLogging(String testName) {																	// Starts ExtentReport logging with the specified test case name 
+		report = ExtentFactory.getInstance();
+		test = report.startTest(testName);
 	}
-
-	public void logData(LogStatus status, String message) throws IOException {
+	
+	public void logData(LogStatus status, String message) throws IOException {									// Main logic of logging mechanism: takes screenshot, names it using random String and logs the data with the screenshot attached
 		String name = getRandomString(10);
 		File srcImage = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		FileUtils.copyFile(srcImage, new File("./target/extentreports/images/" + name + ".png"));
 		test.log(status, message + test.addScreenCapture("./images/" + name + ".png"));
 	}
 
-	public void startLogging(String testName) {
-		report = ExtentFactory.getInstance();
-		test = report.startTest(testName);
+	public void finishLogging() {																				// Finishes ExtentReport logging for the specified test 
+		report.endTest(test);
+		report.flush();
 	}
 
-	public static String getRandomString(int length) {
+	public static String getRandomString(int length) {															// Random String generator
 		StringBuilder sb = new StringBuilder();
 		String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 		for (int i = 0; i < length; i++) {
@@ -283,12 +211,12 @@ public class BasePage {
 		return sb.toString();
 	}
 
-	public static void archiveReport() throws Exception {
+	public static void archiveReport() throws Exception {														// Archives report: starts cmd and navigates to a .bat file where the logic is stored
 		Runtime.getRuntime().exec(cmd);
 		Thread.sleep(2000);
 	}
 
-	public static void highlightAreaWithJavascript(WebElement element) throws InterruptedException {
+	public static void highlightAreaWithJavascript(WebElement element) throws InterruptedException {			// Highlights and unhighlights the area with JS
 
 		JavascriptExecutor js = (JavascriptExecutor)Driver.getInstance();
 		js.executeScript("arguments[0].style.border= '3px solid red'", element);

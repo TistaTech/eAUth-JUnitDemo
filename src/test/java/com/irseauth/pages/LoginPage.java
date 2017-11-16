@@ -49,7 +49,7 @@ public class LoginPage extends BasePage {
 		logData(LogStatus.INFO, "Password Entered");
 
 		highlightAreaWithJavascript(loginButton);
-		click(loginButton);
+		loginButton.click();
 		logData(LogStatus.INFO, "Login button clicked");
 	}
 

@@ -94,11 +94,11 @@ public class ContactFormPage extends BasePage {
 		logData(LogStatus.INFO, "Phone Number Entered");
 		
 		highlightAreaWithJavascript(checkbox2Text);													
-		click(checkbox2);
+		checkbox2.click();
 		logData(LogStatus.INFO, "Second checkbox selected");
 		
 		highlightAreaWithJavascript(radioButton3Text);
-		click(radioButton3);
+		radioButton3.click();
 		logData(LogStatus.INFO, "Third radio button selected");
 		
 		highlightAreaWithJavascript(dropdownMenu);
@@ -110,7 +110,7 @@ public class ContactFormPage extends BasePage {
 		logData(LogStatus.INFO, "Message entered");
 
 		highlightAreaWithJavascript(submitButton);
-		click(submitButton);
+		submitButton.click();
 		logData(LogStatus.INFO, "Submit button clicked");
 
 	}

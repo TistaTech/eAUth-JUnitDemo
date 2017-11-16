@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
@@ -24,9 +25,9 @@ public class IRSDemo {
 
 	@BeforeMethod                                                                                           // Keep it as "BeforeMethod" so browser restarts for each test case. Needed due to cashing issues on IRS website; 
 	public void setUp() {
-		contactForm = new ContactFormPage();
-		login = new LoginPage();
-		driver = Driver.getInstance();
+		driver = Driver.getInstance();																		// Driver instance is generated inside the Driver class based on the browser parameter provided in configuration.properties file
+		contactForm = PageFactory.initElements(driver, ContactFormPage.class);;								// Pages have to be instantiated inside "Before Method" so constructors inside these pages instantiate the driver;  
+		login = PageFactory.initElements(driver, LoginPage.class);		 
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 	}

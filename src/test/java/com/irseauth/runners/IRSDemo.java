@@ -7,6 +7,7 @@ import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -64,7 +65,11 @@ public class IRSDemo {
 
 	@AfterMethod                                                                                             // Keep it as "After Method" so browser closes after each test case;
 	public void tearDown() throws Exception {
-		Driver.closeDriver();
+		Driver.closeDriver();	
+	}
+	
+	@AfterTest																								 // Keep it as "After Test" - report needs to be archived only once;
+	public void archiveReport() throws Exception {
 		BasePage.archiveReport();
 	}
 }

@@ -51,6 +51,7 @@ public class BasePage {
 	// These methods are to generalize the url get method for the browser to
 	// navigate to a page defined as the url.
 	public void navigateToPage(String URL, String title) throws IOException {
+		System.out.println(driver);
 		driver.get(ConfigurationReader.getProperty(URL));
 		if ((driver.getTitle().equals(ConfigurationReader.getProperty(title)))) {
 			logData(LogStatus.INFO, "Successfully navigated to " + ConfigurationReader.getProperty(URL));

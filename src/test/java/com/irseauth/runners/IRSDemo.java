@@ -6,11 +6,8 @@ import java.util.concurrent.TimeUnit;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.irseauth.pages.BasePage;
@@ -20,32 +17,52 @@ import com.irseauth.utilities.Driver;
 
 public class IRSDemo {
 
-	private WebDriver driver;
-	ContactFormPage contactForm = new ContactFormPage();
-	LoginPage login = new LoginPage();
+	public WebDriver driver;
+	ContactFormPage contactForm;
+	LoginPage login;
 
-	@BeforeTest
+	@BeforeMethod                                                                                           // Keep it as "BeforeMethod" so browser restarts for each test case. Needed due to cashing issues on IRS website; 
 	public void setUp() {
+		contactForm = new ContactFormPage();
+		login = new LoginPage();
 		driver = Driver.getInstance();
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 	}
 
 	@Test(priority = 0, enabled = true)
-	public void contactForm() throws InterruptedException, EncryptedDocumentException, InvalidFormatException, IOException {
+	public void contactForm()
+			throws InterruptedException, EncryptedDocumentException, InvalidFormatException, IOException {  
 		contactForm.startLogging("Contact Form");
 		contactForm.dataEntryContactForm_PO();
 		contactForm.finishLogging();
 	}
 
-	@Test(priority = 1, enabled = false)
-	public void loginTest() throws EncryptedDocumentException, InvalidFormatException, InterruptedException, IOException {
+	@Test(priority = 1, enabled = true)
+	public void loginTest()
+			throws EncryptedDocumentException, InvalidFormatException, InterruptedException, IOException {
 		login.startLogging("Login test");
 		login.dataEntryLogin_PO();
 		login.finishLogging();
 	}
 
-	@AfterTest
+	@Test(priority = 2, enabled = true)
+	public void contactForm2()
+			throws InterruptedException, EncryptedDocumentException, InvalidFormatException, IOException {
+		contactForm.startLogging("Contact Form2");
+		contactForm.dataEntryContactForm_PO();
+		contactForm.finishLogging();
+	}
+
+	@Test(priority = 3, enabled = true)
+	public void loginTest2()
+			throws EncryptedDocumentException, InvalidFormatException, InterruptedException, IOException {
+		login.startLogging("Login test2");
+		login.dataEntryLogin_PO();
+		login.finishLogging();
+	}
+
+	@AfterMethod                                                                                             // Keep it as "After Method" so browser closes after each test case;
 	public void tearDown() throws Exception {
 		Driver.closeDriver();
 		BasePage.archiveReport();

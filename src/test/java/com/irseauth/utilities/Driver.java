@@ -7,9 +7,8 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
-import io.github.bonigarcia.wdm.ChromeDriverManager;
-import io.github.bonigarcia.wdm.FirefoxDriverManager;
-import io.github.bonigarcia.wdm.InternetExplorerDriverManager;
+import com.irseauth.utilities.ConfigurationReader;
+
 
 
 
@@ -21,24 +20,22 @@ public class Driver {
 		if (driver == null || ((RemoteWebDriver) driver).getSessionId() == null) {
 			switch (ConfigurationReader.getProperty("browser")) {
 			case "firefox":
-				FirefoxDriverManager.getInstance().setup();
+				System.setProperty("webdriver.gecko.driver", ConfigurationReader.getProperty("gecko.driver.path"));
 				driver = new FirefoxDriver();
 				break;
 			case "chrome":
-				ChromeDriverManager.getInstance().setup();
+				System.setProperty("webdriver.chrome.driver", ConfigurationReader.getProperty("chrome.driver.path"));
 				driver = new ChromeDriver();
 				break;
 			case "ie":
-				InternetExplorerDriverManager.getInstance().arch64().setup();
+				System.setProperty("webdriver.ie.driver", ConfigurationReader.getProperty("ie.driver.path"));
 				driver = new InternetExplorerDriver();
 				break;
-			
 			case "safari":
 				driver = new SafariDriver();
-				break;
-			
+				break;	
 			default:
-				ChromeDriverManager.getInstance().setup();
+				System.setProperty("webdriver.chrome.driver", ConfigurationReader.getProperty("chrome.driver.path"));
 				driver = new ChromeDriver();
 				break;
 			}

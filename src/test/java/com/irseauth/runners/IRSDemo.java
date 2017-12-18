@@ -26,7 +26,7 @@ public class IRSDemo {
 	@BeforeMethod                                                                                           // Keep it as "BeforeMethod" so browser restarts for each test case. Needed due to cashing issues on IRS website; 
 	public void setUp() {
 		driver = Driver.getInstance();																		// Driver instance is generated inside the Driver class based on the browser parameter provided in configuration.properties file
-		contactForm = PageFactory.initElements(driver, ContactFormPage.class);;								// Pages have to be instantiated inside "Before Method" so constructors inside these pages instantiate the driver;  
+		contactForm = PageFactory.initElements(driver, ContactFormPage.class);								// Pages have to be instantiated inside "Before Method" so constructors inside these pages instantiate the driver;  
 		login = PageFactory.initElements(driver, LoginPage.class);		 
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
@@ -48,21 +48,21 @@ public class IRSDemo {
 		login.finishLogging();
 	}
 
-	@Test(priority = 2, enabled = true)
-	public void contactForm2()
-			throws InterruptedException, EncryptedDocumentException, InvalidFormatException, IOException {
-		contactForm.startLogging("Contact Form2");
-		contactForm.dataEntryContactForm_PO();
-		contactForm.finishLogging();
-	}
-
-	@Test(priority = 3, enabled = true)
-	public void loginTest2()
-			throws EncryptedDocumentException, InvalidFormatException, InterruptedException, IOException {
-		login.startLogging("Login test2");
-		login.dataEntryLogin_PO();
-		login.finishLogging();
-	}
+//	@Test(priority = 2, enabled = true)
+//	public void contactForm2()
+//			throws InterruptedException, EncryptedDocumentException, InvalidFormatException, IOException {
+//		contactForm.startLogging("Contact Form2");
+//		contactForm.dataEntryContactForm_PO();
+//		contactForm.finishLogging();
+//	}
+//
+//	@Test(priority = 3, enabled = true)
+//	public void loginTest2()
+//			throws EncryptedDocumentException, InvalidFormatException, InterruptedException, IOException {
+//		login.startLogging("Login test2");
+//		login.dataEntryLogin_PO();
+//		login.finishLogging();
+//	}
 
 	@AfterMethod                                                                                             // Keep it as "After Method" so browser closes after each test case;
 	public void tearDown() throws Exception {
